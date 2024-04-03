@@ -16,7 +16,7 @@ namespace HDPredictor.Platforms.Android
         public BluetoothReceiver()
         {
 
-            MainPage.MainPageDeviceConnectRequest += MainPage_MainPageDeviceConnectRequest;
+            //MainPage.MainPageDeviceConnectRequest += MainPage_MainPageDeviceConnectRequest;
         }
         private async void MainPage_MainPageDeviceConnectRequest(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -33,47 +33,49 @@ namespace HDPredictor.Platforms.Android
                 var bonded = device.BondState;
                 if(bonded != Bond.Bonded)
                 {
-                    AppShell.BTLog($"{device.Name} is not paired, trying to pair");
+                    
                     var isbonding = device.CreateBond();
-                    if (isbonding)
-                    {
-                        AppShell.BTLog($"{device.Name} pairing started. Try connecting again after pairing");
-                    }
-                    else
-                    {
-                        AppShell.BTLog($"unable to pair {device.Name}");
-                    }
+                    
                     return;
                 }
                 
                 try
                 {
                     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.DefaultAdapter;
-                    BluetoothDevice btd = bluetoothAdapter.GetRemoteDevice(device.Address);
-                    UUID uuid = UUID.RandomUUID();
+                    BluetoothDevice btd = bluetoothAdapter.GetRemoteDevice(device.Address); 
+                    var x = btd.FetchUuidsWithSdp();
+                    UUID uuid = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");//serial
+                    //var existingId = btd.GetUuids()?.LastOrDefault();
+                    //if(existingId!=null) uuid = existingId.Uuid;
                     var socket = btd.CreateRfcommSocketToServiceRecord(uuid);
 
-                    var inputStream = socket.InputStream;
-                    byte[] buffer = new byte[1024];
-                    int bytes;
-
-                    while (true)
+                    //await socket.ConnectAsync();
+                    if (true)
                     {
-                        bytes = await inputStream.ReadAsync(buffer, 0, buffer.Length);
-                        string data = Encoding.ASCII.GetString(buffer, 0, bytes);
-                        if (!string.IsNullOrWhiteSpace(data))
+                        var inputStream = socket.InputStream;
+                        byte[] buffer = new byte[1024];
+                        int bytes;
+
+                        while (true)
                         {
-                            AppShell.BTDataReceived(data);
-                            break;
+                            bytes = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                            string data = Encoding.ASCII.GetString(buffer, 0, bytes);
+                            if (!string.IsNullOrWhiteSpace(data))
+                            { 
+                                break;
+                            }
+
                         }
-                        
                     }
+                        
+
+
+                    
 
                 }
                 catch (Exception e)
                 {
-
-                    AppShell.BTError($"{device.Name} says {e.Message}");
+                     
                 }
             }
         }
@@ -86,8 +88,7 @@ namespace HDPredictor.Platforms.Android
                 var device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);                
                 
                 if (!string.IsNullOrWhiteSpace(device.Name))
-                {                    
-                    AppShell.BTDevices(device?.Name);
+                {          
                     MainActivity.discoveredDevices.Add(device);
                 }
                     
@@ -95,14 +96,12 @@ namespace HDPredictor.Platforms.Android
             else if(action == BluetoothDevice.ActionAclConnected)
             {
                 var device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
-                Toast.MakeText(context, $"Device {device.Name} connected", ToastLength.Long).Show();
-                AppShell.BTLog($"{device.Name} connected");
-                await StartReceivingData(device);
+                Toast.MakeText(context, $"Device {device.Name} connected", ToastLength.Long).Show(); 
+                //await StartReceivingData(device);
             }
             else if (action == BluetoothDevice.ActionAclDisconnected)
             {
-                var device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
-                AppShell.BTLog($"{device.Name} disconnected");
+                var device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice); 
                 Toast.MakeText(context, $"Device {device.Name} disconnected", ToastLength.Long).Show();
 
             }

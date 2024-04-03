@@ -9,8 +9,9 @@
 
             <Entry x:Name="userName" Placeholder="User name"  HorizontalOptions="Fill" FontSize="20"/>
             <Entry x:Name="password" Placeholder="Password" IsPassword="True"  HorizontalOptions="Fill" FontSize="20"/>
-
+            <Label x:Name="error" Text="Invalid credentials" IsVisible="False" TextColor="Red"></Label>
             <Button Text="Login" Clicked="Button_Clicked" HorizontalOptions="Fill" />
+            
         </StackLayout>
         
     </VerticalStackLayout>

@@ -9,13 +9,46 @@
 
             <StackLayout Orientation="Horizontal"> 
                 <Picker x:Name="devicePicker" WidthRequest="300"
-                    ItemsSource="{Binding devices}"
+                    ItemsSource="{Binding devices}" ItemDisplayBinding="{Binding Name}"
                     SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" />
                 <Button 
                 Text="Connect"  
                 Clicked="OnConnectClicked"
                 HorizontalOptions="Fill" />     
 
+            </StackLayout>
+            <StackLayout Margin="20">
+                <!-- Email Entry -->
+                <Entry Placeholder="Email" Keyboard="Email" x:Name="EmailEntry" />
+
+                <!-- Name Entry -->
+                <Entry Placeholder="Name" x:Name="NameEntry" />
+
+                <!-- Age Entry -->
+                <Entry Placeholder="Age" Keyboard="Numeric" x:Name="AgeEntry" />
+
+                <!-- Gender Picker -->
+                <Picker Title="Gender" x:Name="GenderPicker">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
+                            <x:String>Other</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Height Entry -->
+                <Entry Placeholder="Height (cm)" Keyboard="Numeric" x:Name="HeightEntry" />
+
+                <!-- Weight Entry -->
+                <Entry Placeholder="Weight (kg)" Keyboard="Numeric" x:Name="WeightEntry" />
+                
+                <!-- Heartbeat Entry -->
+                <Entry Placeholder="Heart Beats" Keyboard="Numeric" x:Name="HeartBeatEntry" />
+
+                <!-- Submit Button -->
+                <Button Text="Submit" Clicked="Submit_Clicked" />
             </StackLayout>
             <Label Text="" x:Name="logs" VerticalOptions="End"  />
 
