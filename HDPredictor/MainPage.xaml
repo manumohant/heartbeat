@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HDPredictor.MainPage" >
+
+    <ScrollView>
+        <VerticalStackLayout
+           >
+
+            <StackLayout Orientation="Horizontal"> 
+                <Picker x:Name="devicePicker" WidthRequest="300"
+                    ItemsSource="{Binding devices}"
+                    SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" />
+                <Button 
+                Text="Connect"  
+                Clicked="OnConnectClicked"
+                HorizontalOptions="Fill" />     
+
+            </StackLayout>
+            <Label Text="" x:Name="logs" VerticalOptions="End"  />
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

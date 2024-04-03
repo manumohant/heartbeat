@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HDPredictor.LoginPage"
+             Title="Login">
+    <VerticalStackLayout>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20" Margin="10,10,10,10" >
+            <Label Text="Welcome to Heart Disease predictor " FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"  />
+
+            <Entry x:Name="userName" Placeholder="User name"  HorizontalOptions="Fill" FontSize="20"/>
+            <Entry x:Name="password" Placeholder="Password" IsPassword="True"  HorizontalOptions="Fill" FontSize="20"/>
+
+            <Button Text="Login" Clicked="Button_Clicked" HorizontalOptions="Fill" />
+        </StackLayout>
+        
+    </VerticalStackLayout>
+</ContentPage>
