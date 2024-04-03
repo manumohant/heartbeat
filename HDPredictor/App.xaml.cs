@@ -1,4 +1,6 @@
-﻿namespace HDPredictor
+﻿using HDPredictor.Services;
+
+namespace HDPredictor
 {
     public partial class App : Application
     {

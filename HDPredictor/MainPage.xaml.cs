@@ -5,13 +5,13 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
-using Plugin.BLE.Abstractions.EventArgs; 
+using Plugin.BLE.Abstractions.EventArgs;
+using HDPredictor.Services;
 
 namespace HDPredictor
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
         public ObservableCollection<IDevice> devices { get; set; } 
          
 

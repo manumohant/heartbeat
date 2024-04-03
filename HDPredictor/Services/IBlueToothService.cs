@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HDPredictor
+namespace HDPredictor.Services
 {
     public interface IBlueToothService
     {

@@ -4,10 +4,10 @@
              x:Class="HDPredictor.MainPage" >
 
     <ScrollView>
-        <VerticalStackLayout
-           >
+        <Grid RowDefinitions="Auto,Auto,*">
+            
 
-            <StackLayout Orientation="Horizontal"> 
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Margin="10"> 
                 <Picker x:Name="devicePicker" WidthRequest="300"
                     ItemsSource="{Binding devices}" ItemDisplayBinding="{Binding Name}"
                     SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" />
@@ -17,7 +17,7 @@
                 HorizontalOptions="Fill" />     
 
             </StackLayout>
-            <StackLayout Margin="20">
+            <StackLayout Margin="10" Grid.Row="1">
                 <!-- Email Entry -->
                 <Entry Placeholder="Email" Keyboard="Email" x:Name="EmailEntry" />
 
@@ -49,12 +49,16 @@
 
                 <!-- Submit Button -->
                 <Button Text="Submit" Clicked="Submit_Clicked" />
+
+                <Label x:Name="result" Text="Result: ____________________" Padding="0,20,0,0"></Label>
             </StackLayout>
-            <Label Text="" x:Name="logs" VerticalOptions="End"  />
+            <ScrollView MaximumHeightRequest="200" Margin="10" VerticalOptions="End" HorizontalOptions="End" Grid.Row="2">
+                <Label Text="" x:Name="logs" VerticalOptions="End" />
+            </ScrollView>
 
 
 
-        </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 
 </ContentPage>
