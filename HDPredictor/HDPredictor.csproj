@@ -57,6 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\ecg.png" />
+	  <None Remove="Resources\Images\ecggif.gif" />
+	  <None Remove="Resources\Images\gen.png" />
+	  <None Remove="Resources\Images\login.png" />
+	  <None Remove="Resources\Images\pom.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -67,7 +75,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ECGPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="POMPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

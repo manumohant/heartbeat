@@ -4,17 +4,12 @@
              x:Class="HDPredictor.MainPage" >
 
     <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,*">
+        <Grid RowDefinitions="Auto,*">
             
 
-            <StackLayout Orientation="Horizontal" Grid.Row="0" Margin="10"> 
-                <Picker x:Name="devicePicker" WidthRequest="300"
-                    ItemsSource="{Binding devices}" ItemDisplayBinding="{Binding Name}"
-                    SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" />
-                <Button 
-                Text="Connect"  
-                Clicked="OnConnectClicked"
-                HorizontalOptions="Fill" />     
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Margin="10">
+                <Image Source="Images/gen.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="300" HeightRequest="300"></Image>
+                   
 
             </StackLayout>
             <StackLayout Margin="10" Grid.Row="1">
@@ -37,25 +32,49 @@
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
+                <Picker Title="Chest Pain" x:Name="ChestPain">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Typical Angina</x:String>
+                            <x:String>Atypical Angina</x:String>
+                            <x:String>Non-anginal pain</x:String>
+                            <x:String>Asymptomatic</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Entry Placeholder="Resting Blood Pressure(mm/Hg)" Keyboard="Numeric" x:Name="RestingBP" />
+                <Entry Placeholder="Serum Cholesterol(mg/dl)" Keyboard="Numeric" x:Name="Cholesterol" />
+                <Picker Title="Fasting Blood Sugar > 120mg/dl?" x:Name="BloodSugar">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Yes</x:String>
+                            <x:String>No</x:String> 
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Picker Title="Exercise induced angina?" x:Name="ExIndAngina">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Yes</x:String>
+                            <x:String>No</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
 
-                <!-- Height Entry -->
+                <!-- Height Entry --><!--
                 <Entry Placeholder="Height (cm)" Keyboard="Numeric" x:Name="HeightEntry" />
 
-                <!-- Weight Entry -->
+                --><!-- Weight Entry --><!--
                 <Entry Placeholder="Weight (kg)" Keyboard="Numeric" x:Name="WeightEntry" />
                 
-                <!-- Heartbeat Entry -->
-                <Entry Placeholder="Heart Beats" Keyboard="Numeric" x:Name="HeartBeatEntry" />
+                --><!-- Heartbeat Entry --><!--
+                <Entry Placeholder="Heart Beats" Keyboard="Numeric" x:Name="HeartBeatEntry" />-->
 
                 <!-- Submit Button -->
-                <Button Text="Submit" Clicked="Submit_Clicked" />
+                <Button Text="Continue" Clicked="Submit_Clicked" />
 
-                <Label x:Name="result" Text="Result: ____________________" Padding="0,20,0,0"></Label>
             </StackLayout>
-            <ScrollView MaximumHeightRequest="200" Margin="10" VerticalOptions="End" HorizontalOptions="End" Grid.Row="2">
-                <Label Text="" x:Name="logs" VerticalOptions="End" />
-            </ScrollView>
-
+            
 
 
         </Grid>
