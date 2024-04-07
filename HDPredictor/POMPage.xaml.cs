@@ -2,12 +2,15 @@ using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
 
 namespace HDPredictor;
 
 public partial class POMPage : ContentPage
 {
     public ObservableCollection<IDevice> devices { get; set; }
+    private Dictionary<string, byte[]> bleData = new Dictionary<string, byte[]>(); 
     public POMPage()
 	{
         devices = new ObservableCollection<IDevice>();
@@ -75,10 +78,19 @@ public partial class POMPage : ContentPage
 
     private void _characteristic_ValueUpdated(object? sender, CharacteristicUpdatedEventArgs e)
     {
-
+        byte[] data = null;
+        if(bleData.TryGetValue(e.Characteristic.Name,out data))
+        {
+            bleData[e.Characteristic.Name] = data.Concat(e.Characteristic.Value).ToArray();
+        }
+        else
+        {
+            bleData.Add(e.Characteristic.Name,e.Characteristic.Value);
+        }
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            this.logs.Text += $"Data received: {e.Characteristic.Name}=" + e.Characteristic.StringValue + "\r\n";
+            var d = string.Join(',', bleData[e.Characteristic.Name]);
+            this.logs.Text += $"Data received: {e.Characteristic.Name}=" + d + "\r\n";
             //this.HeartBeatEntry.Text = this.HeartBeatEntry.Text + e.Characteristic.StringValue;
         });
 

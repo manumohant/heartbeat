@@ -4,7 +4,7 @@ namespace HDPredictor.Services
 {
     public class DatabaseService
     {
-        string connectionString = "Server=tcp:heartdisease.database.windows.net,1433;Initial Catalog=heartdisease;Persist Security Info=False;User ID=mobileuser;Password=Mobile@1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        string connectionString = "Server=tcp:heartdisease.database.windows.net,1433;Initial Catalog=heartdisease;User ID=mobileuser;Password=Mobile@1234;MultipleActiveResultSets=False;TrustServerCertificate=True;Connection Timeout=30;";
         public DatabaseService() 
         {
 
