@@ -9,7 +9,7 @@
             VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="20" Margin="10,10,10,10">
             <Image Source="Images/ecg.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="300" HeightRequest="300"></Image>
             <Label 
-                 Text="Plese select ECG device and connect"
+                 Text="Please select ECG device and connect"
                  VerticalOptions="Center" 
                  HorizontalOptions="Center" />
             <Picker x:Name="devicePicker" WidthRequest="300"

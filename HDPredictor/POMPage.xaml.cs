@@ -40,7 +40,7 @@ public partial class POMPage : ContentPage
             return;
         }
 
-
+        if (this.devicePicker.SelectedItem == null) return;
 
         var selectedDevice = this.devicePicker.SelectedItem as IDevice;
 

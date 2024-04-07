@@ -11,6 +11,9 @@
     <MauiXaml Update="ECGPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="FinalPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="LoginPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

@@ -57,9 +57,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\doctorloading.gif" />
 	  <None Remove="Resources\Images\ecg.png" />
 	  <None Remove="Resources\Images\ecggif.gif" />
 	  <None Remove="Resources\Images\gen.png" />
+	  <None Remove="Resources\Images\loading.gif" />
 	  <None Remove="Resources\Images\login.png" />
 	  <None Remove="Resources\Images\pom.png" />
 	</ItemGroup>
@@ -76,6 +78,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="ECGPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="FinalPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="LoginPage.xaml">

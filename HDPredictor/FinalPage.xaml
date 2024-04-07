@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HDPredictor.FinalPage"
+             Title="FinalPage" >
+    <VerticalStackLayout Spacing="20" Margin="10,10,10,10">
+        <Image x:Name="animation" Source="Images/loading.gif" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  IsAnimationPlaying="True"></Image>
+        <Label  Text="This can take a while. Please be patient" x:Name="caption" FontSize="30"></Label>
+        <Label Text="You are not at risk" x:Name="result"  IsVisible="False" FontSize="30"></Label>
+    </VerticalStackLayout>
+</ContentPage>

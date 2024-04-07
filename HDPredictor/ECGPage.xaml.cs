@@ -38,6 +38,7 @@ public partial class ECGPage : ContentPage
         }
 
 
+        if (this.devicePicker.SelectedItem == null) return;
 
         var selectedDevice = this.devicePicker.SelectedItem as IDevice;
 
@@ -114,8 +115,8 @@ public partial class ECGPage : ContentPage
     {
 
     }
-    private void Button_Clicked(object sender, EventArgs e)
+    private async void Button_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new FinalPage());
     }
 }
