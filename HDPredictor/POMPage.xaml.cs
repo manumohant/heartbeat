@@ -77,23 +77,12 @@ public partial class POMPage : ContentPage
     }
 
     private void _characteristic_ValueUpdated(object? sender, CharacteristicUpdatedEventArgs e)
-    {
-        byte[] data = null;
-        if(bleData.TryGetValue(e.Characteristic.Name,out data))
-        {
-            bleData[e.Characteristic.Name] = data.Concat(e.Characteristic.Value).ToArray();
-        }
-        else
-        {
-            bleData.Add(e.Characteristic.Name,e.Characteristic.Value);
-        }
+    { 
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            var d = string.Join(',', bleData[e.Characteristic.Name]);
-            this.logs.Text += $"Data received: {e.Characteristic.Name}=" + d + "\r\n";
-            //this.HeartBeatEntry.Text = this.HeartBeatEntry.Text + e.Characteristic.StringValue;
+            var val = Plugin.BLE.DataAdapter.Current.ParseUtf(e.Characteristic.Value);
+            this.logs.Text += $"Data received: {e.Characteristic.Name},PulseOximeterReading=" + val + "\r\n";
         });
-
 
     }
     private void Adapter_DeviceDiscovered(object? sender, DeviceEventArgs e)

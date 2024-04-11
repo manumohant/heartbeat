@@ -77,6 +77,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Plugin.BLE.DataAdapter">
+	    <HintPath>..\Plugin.BLE.DataAdapter.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="ECGPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

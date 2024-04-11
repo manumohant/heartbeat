@@ -76,8 +76,8 @@ public partial class ECGPage : ContentPage
 
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            this.logs.Text += $"Data received: {e.Characteristic.Name}=" + e.Characteristic.StringValue + "\r\n";
-            //this.HeartBeatEntry.Text = this.HeartBeatEntry.Text + e.Characteristic.StringValue;
+            var val = Plugin.BLE.DataAdapter.Current.ParseAscii(e.Characteristic.Value);
+            this.logs.Text += $"Data received: {e.Characteristic.Name},RestECG={val.Item1},OldPeak={val.Item2},Slope={val.Item3}\r\n";
         });
 
 
