@@ -55,16 +55,19 @@ public partial class ECGPage : ContentPage
 
         foreach (var service in services)
         {
+            if (service.Id != Guid.Parse("4fafc201-1fb5-459e-8fcc-c5c9c331914b")) continue;
 
 
             var _characteristics = await service.GetCharacteristicsAsync();
             foreach (var character in _characteristics)
             {
+                if (character.Id != Guid.Parse("beb5483e-36e1-4688-b7f5-ea07361b26a8")) continue;
                 try
                 {
                     character.ValueUpdated += _characteristic_ValueUpdated; ;
-                    suitableCharacteristsFound = true;
+
                     await character.StartUpdatesAsync();
+                    suitableCharacteristsFound = true;
                 }
                 catch (Exception ex)
                 {
