@@ -20,7 +20,7 @@
                 Text="Connect"  
                 Clicked="OnConnectClicked"
                 HorizontalOptions="Fill" />
-                        <!--<Button Text="Continue" Clicked="Button_Clicked" />-->
+                        <Button Text="Continue" Clicked="Button_Clicked" />
 
             <ScrollView MaximumHeightRequest="200" Margin="10" VerticalOptions="End" HorizontalOptions="End" Grid.Row="2">
                 <Label Text="" x:Name="logs" VerticalOptions="End" />

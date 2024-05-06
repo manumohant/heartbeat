@@ -8,5 +8,8 @@
         <Label  Text="This can take a while. Please be patient" x:Name="caption" FontSize="30"></Label>
         <Label Text="You are not at risk" x:Name="resultTrue"  IsVisible="False" FontSize="30"></Label>
         <Label Text="You are at risk" x:Name="resultFalse"  IsVisible="False" FontSize="30"></Label>
+        <ScrollView MaximumHeightRequest="200" Margin="10" VerticalOptions="End" HorizontalOptions="End" Grid.Row="2">
+            <Label Text="" x:Name="logs" VerticalOptions="End" />
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

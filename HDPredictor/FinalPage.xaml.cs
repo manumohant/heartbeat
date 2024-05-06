@@ -20,7 +20,7 @@ public partial class FinalPage : ContentPage
         animation.IsAnimationPlaying = false;
         await Task.Delay(100);
         animation.IsAnimationPlaying = true;
-        await Task.Delay(1000*15);
+        this.logs.Text += "Calling Model endpoint.\r\n";
         var handler = new HttpClientHandler()
         {
             ClientCertificateOptions = ClientCertificateOption.Manual,
@@ -33,22 +33,28 @@ public partial class FinalPage : ContentPage
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "gTyA7quRQmZmx6oimndTpJhcp8MqSVw3 ");
             client.BaseAddress = new Uri("https://heart-disease-kuvps.centralindia.inference.ml.azure.com/score");
-
-            var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(
+            this.logs.Text += "https://heart-disease-kuvps.centralindia.inference.ml.azure.com/score\r\n";
+            var json = System.Text.Json.JsonSerializer.Serialize(
                 new
                 {
                     data = _model
                 }
-            ));
-
+            );
+            var content = new StringContent(json);
+            this.logs.Text += $"Request: {json}";
+            await Task.Delay(1000 * 10);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             content.Headers.Add("azureml-model-deployment", "heart-disease-1");
             HttpResponseMessage response = await client.PostAsync("", content);
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync() == "true" ? true: false;
-                this.resultFalse.IsVisible = result;
-                this.resultTrue.IsVisible = !result;
+                var result = await response.Content.ReadAsStringAsync();
+                var prediction = System.Text.Json.JsonSerializer.Deserialize<PredictionOutcome>(System.Text.Json.JsonSerializer.Deserialize<string>(result));
+                this.resultFalse.IsVisible = prediction.predictions[0] == "true";
+                this.resultTrue.IsVisible = !(prediction.predictions[0] == "true");
+                await DisplayAlert("Success", "Your result is ready to view", "Close");
+
+                this.logs.Text += $"Response: {result}";
             }
             else
             {

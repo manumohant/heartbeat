@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace HDPredictor.Models
 {
+    public class PredictionOutcome
+    {
+        public string[] predictions { get; set; }
+    }
+
     public class HDModel
     {
         public string Email { get; set; }
