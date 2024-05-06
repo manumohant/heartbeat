@@ -64,6 +64,7 @@
 	  <None Remove="Resources\Images\loading.gif" />
 	  <None Remove="Resources\Images\login.png" />
 	  <None Remove="Resources\Images\pom.png" />
+	  <None Remove="Resources\Images\tick.gif" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -74,6 +75,10 @@
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.14" />
 		<PackageReference Include="Plugin.BLE" Version="3.0.0" />
 		<PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\HDPredictorModel\HDPredictorModel.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -5,3 +5,6 @@
 /HDPredictor/bin/Debug/net8.0-android
 /.vs
 /HDPredictor/obj
+/HDPredictor/bin/Debug
+/HDPredictorModel/bin
+/HDPredictorModel/obj

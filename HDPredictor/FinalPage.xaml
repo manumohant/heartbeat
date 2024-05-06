@@ -6,6 +6,7 @@
     <VerticalStackLayout Spacing="20" Margin="10,10,10,10">
         <Image x:Name="animation" Source="Images/loading.gif" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  IsAnimationPlaying="True"></Image>
         <Label  Text="This can take a while. Please be patient" x:Name="caption" FontSize="30"></Label>
-        <Label Text="You are not at risk" x:Name="result"  IsVisible="False" FontSize="30"></Label>
+        <Label Text="You are not at risk" x:Name="resultTrue"  IsVisible="False" FontSize="30"></Label>
+        <Label Text="You are at risk" x:Name="resultFalse"  IsVisible="False" FontSize="30"></Label>
     </VerticalStackLayout>
 </ContentPage>

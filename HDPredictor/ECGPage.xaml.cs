@@ -1,3 +1,4 @@
+using HDPredictor.Models;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
@@ -9,9 +10,12 @@ public partial class ECGPage : ContentPage
 {
 
     public ObservableCollection<IDevice> devices { get; set; }
+    private HDModel _model;
+    private List<(int,int,int)> readings = new List<(int, int, int)> ();
 
-    public ECGPage()
+    public ECGPage(HDModel model)
     {
+        _model = model;
         devices = new ObservableCollection<IDevice>();
         InitializeComponent();
         BindingContext = this;
@@ -37,7 +41,7 @@ public partial class ECGPage : ContentPage
             return;
         }
 
-
+        var suitableCharacteristsFound = false;
         if (this.devicePicker.SelectedItem == null) return;
 
         var selectedDevice = this.devicePicker.SelectedItem as IDevice;
@@ -59,7 +63,7 @@ public partial class ECGPage : ContentPage
                 try
                 {
                     character.ValueUpdated += _characteristic_ValueUpdated; ;
-
+                    suitableCharacteristsFound = true;
                     await character.StartUpdatesAsync();
                 }
                 catch (Exception ex)
@@ -68,16 +72,37 @@ public partial class ECGPage : ContentPage
             }
         }
 
-
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            this.logs.Text = "Waiting for data...";
+            if (!suitableCharacteristsFound)
+            {
+                this.logs.Text += "Device ID is not suitable, please select the configured device...";
+                await DisplayAlert("Error", "Device ID is not suitable, please select the configured device... ", "Close");
+            }
+            else
+            {
+                await DisplayAlert("Success", "Successfully connected. Please wait while we collect ECG reading. This may take several minutes ", "Close");
+            }
+        });
     }
 
     private void _characteristic_ValueUpdated(object? sender, CharacteristicUpdatedEventArgs e)
     {
 
-        MainThread.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var val = Plugin.BLE.DataAdapter.Current.ParseAscii(e.Characteristic.Value);
+            var val = Plugin.BLE.DataAdapter.Current.Adaptor.ParseUtf(e.Characteristic.Value, true);
+            readings.Add(val);
             this.logs.Text += $"Data received: {e.Characteristic.Name},RestECG={val.Item1},OldPeak={val.Item2},Slope={val.Item3}\r\n";
+
+            if (this.readings.Count > 200)
+            { 
+                _model.RestEcg = readings.Sum(p => p.Item1) / readings.Count();
+                _model.OldPeak = readings.Sum(p => p.Item2) / readings.Count();
+                _model.Slope = readings.Sum(p => p.Item3) / readings.Count();
+                await Navigation.PushAsync(new FinalPage(_model));
+            }
         });
 
 
@@ -117,6 +142,14 @@ public partial class ECGPage : ContentPage
     }
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new FinalPage());
+        if (this.readings.Count == 0)
+        {
+            await DisplayAlert("Error", "No sufficient ECG reading ", "Close");
+            return;
+        }
+        _model.RestEcg = readings.Sum(p=>p.Item1)/readings.Count();
+        _model.OldPeak = readings.Sum(p => p.Item2) / readings.Count();
+        _model.Slope = readings.Sum(p => p.Item3) / readings.Count();
+        await Navigation.PushAsync(new FinalPage(_model));
     }
 }

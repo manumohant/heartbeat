@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HDPredictor.MainPage" >
+             x:Class="HDPredictor.MainPage" Title="General Information">
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*">
@@ -14,7 +14,7 @@
             </StackLayout>
             <StackLayout Margin="10" Grid.Row="1">
                 <!-- Email Entry -->
-                <Entry Placeholder="Email" Keyboard="Email" x:Name="EmailEntry" />
+                <Entry Placeholder="Email" Keyboard="Email" x:Name="EmailEntry"  />
 
                 <!-- Name Entry -->
                 <Entry Placeholder="Name" x:Name="NameEntry" />
@@ -26,8 +26,8 @@
                 <Picker Title="Gender" x:Name="GenderPicker">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Male</x:String>
                             <x:String>Female</x:String>
+                            <x:String>Male</x:String>
                             <x:String>Other</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
@@ -47,16 +47,16 @@
                 <Picker Title="Fasting Blood Sugar > 120mg/dl?" x:Name="BloodSugar">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
+                            <x:String>No</x:String>
                             <x:String>Yes</x:String>
-                            <x:String>No</x:String> 
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
                 <Picker Title="Exercise induced angina?" x:Name="ExIndAngina">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Yes</x:String>
                             <x:String>No</x:String>
+                            <x:String>Yes</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>

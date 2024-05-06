@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HDPredictor.POMPage"
-             Title="Pulse-Oxi meter reading">
+             Title="Collecting Pulse-Oxi meter reading">
     <AbsoluteLayout>
-        <StackLayout AbsoluteLayout.LayoutFlags="All" 
+        <StackLayout AbsoluteLayout.LayoutFlags="All" x:Name="blepage"
              AbsoluteLayout.LayoutBounds="0,0,1,1"
              VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="20" Margin="10,10,10,10">
             <Image Source="Images/pom.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="300" HeightRequest="300"></Image>
@@ -20,12 +20,13 @@
                 Text="Connect"  
                 Clicked="OnConnectClicked"
                 HorizontalOptions="Fill" />
-                        <Button Text="Continue" Clicked="Button_Clicked" />
+                        <!--<Button Text="Continue" Clicked="Button_Clicked" />-->
 
             <ScrollView MaximumHeightRequest="200" Margin="10" VerticalOptions="End" HorizontalOptions="End" Grid.Row="2">
                 <Label Text="" x:Name="logs" VerticalOptions="End" />
             </ScrollView>
         </StackLayout>
+        
     </AbsoluteLayout>
     
 </ContentPage>

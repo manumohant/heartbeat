@@ -1,3 +1,4 @@
+using HDPredictor.Models;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
@@ -10,9 +11,12 @@ namespace HDPredictor;
 public partial class POMPage : ContentPage
 {
     public ObservableCollection<IDevice> devices { get; set; }
-    private Dictionary<string, byte[]> bleData = new Dictionary<string, byte[]>(); 
-    public POMPage()
+    private Dictionary<string, byte[]> bleData = new Dictionary<string, byte[]>();
+    private HDModel _model;
+    private List<int> readings = new List<int>();
+    public POMPage(HDModel model)
 	{
+        _model = model;
         devices = new ObservableCollection<IDevice>();
         InitializeComponent();
         BindingContext = this;
@@ -20,18 +24,28 @@ public partial class POMPage : ContentPage
         Plugin.BLE.CrossBluetoothLE.Current.StateChanged += Current_StateChanged;
         adapter.DeviceDiscovered += Adapter_DeviceDiscovered;
 
-        adapter.StartScanningForDevicesAsync();
-
+        adapter.StartScanningForDevicesAsync(); 
         foreach (var device in adapter.BondedDevices)
         {
             if (!devices.Any(p => p.Id == device.Id))
                 devices.Add(device);
         }
+
+        
+
+
     }
+    
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-		await Navigation.PushAsync(new ECGPage(), true);
+        if (this.readings.Count == 0)
+        {
+            await DisplayAlert("Error", "No sufficient pulse oximeter reading ", "Close");
+            return;
+        }
+        _model.ThalACH = this.readings.Sum()/this.readings.Count;
+		await Navigation.PushAsync(new ECGPage(_model), true);
     }
     private async void OnConnectClicked(object sender, EventArgs e)
     {
@@ -53,7 +67,7 @@ public partial class POMPage : ContentPage
 
         var services = await _device.GetServicesAsync();
 
-
+        var suitableCharacteristsFound = false;
         foreach (var service in services)
         {
             if (service.Id != Guid.Parse("4fafc201-1fb5-459e-8fcc-c5c9c331914b")) continue;
@@ -68,6 +82,7 @@ public partial class POMPage : ContentPage
                     character.ValueUpdated += _characteristic_ValueUpdated; ;
 
                     await character.StartUpdatesAsync();
+                    suitableCharacteristsFound = true;
                 }
                 catch (Exception ex)
                 {
@@ -75,15 +90,34 @@ public partial class POMPage : ContentPage
             }
         }
 
-
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            this.logs.Text = "Waiting for data...";
+            if(!suitableCharacteristsFound)
+            {
+                this.logs.Text += "Device ID is not suitable, please select the configured device...";
+                await DisplayAlert("Error", "Device ID is not suitable, please select the configured device... ", "Close");
+            }
+            else
+            {
+                await DisplayAlert("Success", "Successfully connected. Please wait while we collect pulse oximeter reading ", "Close");
+            }
+        });
     }
 
     private void _characteristic_ValueUpdated(object? sender, CharacteristicUpdatedEventArgs e)
     { 
-        MainThread.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var val = Plugin.BLE.DataAdapter.Current.ParseUtf(e.Characteristic.Value);
+            var val = Plugin.BLE.DataAdapter.Current.Adaptor.ParseUtf(e.Characteristic.Value);
+            readings.Add(val);
             this.logs.Text += $"Data received: {e.Characteristic.Name},stval={e.Characteristic.StringValue},PulseOximeterReading=" + val + "\r\n";
+            if (readings.Count()>100)
+            {
+                _model.ThalACH = this.readings.Sum() / this.readings.Count;
+                readings.Clear();
+                await Navigation.PushAsync(new ECGPage(_model), true);
+            }
         });
 
     }
