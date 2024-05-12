@@ -11,7 +11,7 @@ public partial class ECGPage : ContentPage
 
     public ObservableCollection<IDevice> devices { get; set; }
     private HDModel _model;
-    private List<(int,int,int)> readings = new List<(int, int, int)> ();
+    private List<(double,int,int)> readings = new List<(double, int, int)> ();
 
     public ECGPage(HDModel model)
     {

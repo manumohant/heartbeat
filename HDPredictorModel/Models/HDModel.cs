@@ -23,7 +23,7 @@ namespace HDPredictor.Models
         public float FastingBloodSugar { get; set; }
         public int Exercise { get; set; }
         public int ThalACH { get;  set; }
-        public int RestEcg { get;  set; }
+        public double RestEcg { get;  set; }
         public int OldPeak { get; set; }
         public int Slope { get; set; }
     }
